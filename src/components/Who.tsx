@@ -1,6 +1,8 @@
 import React from 'react';
 
-type WhoProps = {};
+type WhoProps = {
+
+};
 
 const Who:React.FC<WhoProps> = () => {
     

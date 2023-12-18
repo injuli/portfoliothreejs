@@ -1,6 +1,8 @@
 import React from 'react';
 
-type WorksProps = {};
+type WorksProps = {
+    
+};
 
 const Works:React.FC<WorksProps> = () => {
     

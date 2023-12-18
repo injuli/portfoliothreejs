@@ -1,6 +1,8 @@
 import React from 'react';
 
-type ContactProps = {};
+type ContactProps = {
+    
+};
 
 const Contact:React.FC<ContactProps> = () => {
     

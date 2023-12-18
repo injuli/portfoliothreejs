@@ -1,7 +1,7 @@
 // import React, { useRef } from 'react';
 import "./App.css";
 import styled from "styled-components";
-import Works from "./components/Works";
+import Works from "./components/Works.tsx";
 import Who from "./components/Who";
 import Contact from "./components/Contact";
 import Home from "./components/Home";

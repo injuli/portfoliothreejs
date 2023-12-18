@@ -1,22 +1,17 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Sky } from "@react-three/drei";
 import Sunset from "./Sunset";
+import WaterWaves from "./WaterWaves";
 
 type HomeProps = {};
 
 const Section = styled.div`
   height: 100vh;
-  scroll-snap-align: center;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 768px) {
-    height: 200vh;
-  }
+  justify-content: center;
 `;
 
 const Container = styled.div`
@@ -92,19 +87,29 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
 `;
-
 const Right = styled.div`
+  width: 90%;
+  height: 90%;
   flex: 3;
   position: relative;
   @media only screen and (max-width: 768px) {
     flex: 1;
-    width: 100%;
+    width: 90%;
   }
+
 `;
 
-const Img = styled.img`
-  width: 800px;
-  height: 600px;
+const BlurredBackground = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px); /* Agrega el efecto de difuminado */
+  background: rgba(255, 255, 255, 0.5); /* Establece la transparencia */
+`;
+
+const AnimationB = styled.div`
+  width: auto;
+  height: auto;
   object-fit: contain;
   position: absolute;
   top: 0;
@@ -125,7 +130,17 @@ const Img = styled.img`
     }
   }
 `;
+const CircularCanvasWrapper = styled.div`
+  width: 500px; /* Ancho deseado */
+  height: 500px; /* Altura deseada */
+  border-radius: 50%; /* Forma circular */
+  overflow: hidden; /* Oculta lo que excede los bordes circulares */
+`;
 
+const CircularCanvas = styled(Canvas)`
+  width: 100%;
+  height: 100%;
+`;
 const Home: React.FC<HomeProps> = () => {
   return (
     <Section>
@@ -135,10 +150,10 @@ const Home: React.FC<HomeProps> = () => {
             </Canvas> */}
       <Container>
         <Left>
-          <Title>Think. Make. Solve.</Title>
+          <Title>Ingrid Ruiz</Title>
           <WhatWeDo>
             <Line src="./wallpaper.jpg" />
-            <Subtitle>What we Do?</Subtitle>
+            <Subtitle>Desarrolladora Web</Subtitle>
           </WhatWeDo>
           <Desc>
             We enjoy creating delightful, human-centered digital experiences.
@@ -146,12 +161,34 @@ const Home: React.FC<HomeProps> = () => {
           <Button>Lern More</Button>
         </Left>
         <Right>
-          {/* <Canvas camera={{ position: [0, 0, 10] }}>
-            <Suspense fallback={null}> */}
-              <Sunset />
-              {/* <OrbitControls enableZoom={false} autoRotate />
-            </Suspense>
-          </Canvas> */}
+          {/* <BlurredBackground> */}
+            {/* <AnimationB> */}
+              <CircularCanvasWrapper>
+                <CircularCanvas
+                  camera={{
+                    position: [0, 5, 100],
+                    fov: 55,
+                    near: 1,
+                    far: 20000,
+                  }}
+                >
+                  <pointLight position={[100, 100, 100]} />
+                  <pointLight position={[-100, -100, -100]} />
+                  <Suspense fallback={null}>
+                    <WaterWaves />
+                    <Sunset />
+                  </Suspense>
+                  <Sky
+                    scale={1000}
+                    sunPosition={[500, 150, -1000]}
+                    turbidity={0.1}
+                  />
+                  <OrbitControls />
+                </CircularCanvas>
+              </CircularCanvasWrapper>
+            {/* </AnimationB> */}
+          {/* </BlurredBackground> */}
+
           {/* <Img src="./giphy-unscreen.gif" /> */}
         </Right>
       </Container>
