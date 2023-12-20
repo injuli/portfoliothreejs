@@ -1,6 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Rubik Doodle Shadow */
+@font-face {
+  font-family: 'Notable';
+  src: url('./assets/Notable/Notable-Regular.ttf') format('truetype');
+  /* Agrega otros formatos de fuente si están disponibles */
+}
+@font-face {
+  font-family: 'Montserrat Regular';
+  src: url('./assets/Montserrat_Alternates/MontserratAlternates-Regular.ttf') format('truetype');
+  /* Agrega variaciones y rutas para otras variantes si las tienes ./fonts/Montserrat-Regular.ttf */ 
+  /* Ejemplo: src: url('./fonts/Montserrat-Bold.ttf') format('truetype'); */
+  /* Puedes repetir este bloque para cada variante de Montserrat que hayas descargado */
+}
+/* Aplica las fuentes a elementos específicos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Notable', sans-serif;
+  /* Usa Rubik Doodle Shadow para los títulos */
+}
+
+p,
+span,
+/* Puedes ajustar más selectores según sea necesario */
+.text {
+  font-family: 'Montserrat Regular', sans-serif;
+  /* Usa Montserrat para el texto normal */
+}
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

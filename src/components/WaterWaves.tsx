@@ -10,7 +10,7 @@ const WaterWaves: React.FC = () => {
   const gl = useThree((state) => state.gl)
   const waterNormals = useLoader(THREE.TextureLoader, '/waternormals.jpeg')
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
-  const geom = useMemo(() => new THREE.PlaneGeometry(10000, 10000), [])
+  const geom = useMemo(() => new THREE.PlaneGeometry(1000, 1000), [])
   const config = useMemo(
     () => ({
       textureWidth: 512,
@@ -18,7 +18,7 @@ const WaterWaves: React.FC = () => {
       waterNormals,
       sunDirection: new THREE.Vector3(),
       sunColor: 0xffffff,
-      waterColor: 0x001e0f,
+      waterColor: 0xffbbbb,
       distortionScale: 3.7,
       fog: false,
       format: gl.encoding

@@ -4,12 +4,14 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sky } from "@react-three/drei";
 import Sunset from "./Sunset";
 import WaterWaves from "./WaterWaves";
+import Navbar from "./Navbar";
 
 type HomeProps = {};
 
 const Section = styled.div`
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -29,6 +31,7 @@ const Container = styled.div`
   }
 `;
 
+
 const Left = styled.div`
   flex: 2;
   display: flex;
@@ -43,34 +46,37 @@ const Left = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 74px;
-  font-size: 74px;
+  font-size: 4.2rem;
   color: #3c2051;
-  background: #d1a7c2;
-  padding: 1rem;
-  backdrop-filter: blur(10px);
-  @media only screen and (max-width: 768px) {
-    text-align: center;
-  }
+  // background: #d1a7c2;
+  padding: 1.3rem;
+  // backdrop-filter: blur(2px);
 `;
 
 const WhatWeDo = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-end; /* Alineación a la derecha */
 `;
+
+const Subtitle = styled.h2`
+color: #7d3c63;
+    // background: #ffdfdf;
+    font-size: 1.8rem;
+    // align-self: flex-end;
+    padding: 1rem;
+`;
+
 
 const Line = styled.img`
   height: 5px;
 `;
 
-const Subtitle = styled.h2`
-  color: #da4ea2;
-`;
+
 
 const Desc = styled.p`
   font-size: 24px;
-  color: lightgray;
+  color: black;
   @media only screen and (max-width: 768px) {
     padding: 20px;
     text-align: center;
@@ -99,42 +105,15 @@ const Right = styled.div`
 
 `;
 
-const BlurredBackground = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(10px); /* Agrega el efecto de difuminado */
-  background: rgba(255, 255, 255, 0.5); /* Establece la transparencia */
-`;
 
-const AnimationB = styled.div`
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  animation: animate 2s infinite ease alternate;
-
-  @media only screen and (max-width: 768px) {
-    width: 300px;
-    height: 300px;
-  }
-
-  @keyframes animate {
-    to {
-      transform: translateY(20px);
-    }
-  }
-`;
 const CircularCanvasWrapper = styled.div`
-  width: 500px; /* Ancho deseado */
-  height: 500px; /* Altura deseada */
-  border-radius: 50%; /* Forma circular */
-  overflow: hidden; /* Oculta lo que excede los bordes circulares */
+@apply flex items-center justify-center; 
+clip-path: polygon(50% 100%, 0 0, 100% 0);
+    width: 80%;
+    height: 60%;
+    display: flex;
+    border: 156px red;
+    overflow: hidden;
 `;
 
 const CircularCanvas = styled(Canvas)`
@@ -143,7 +122,9 @@ const CircularCanvas = styled(Canvas)`
 `;
 const Home: React.FC<HomeProps> = () => {
   return (
+
     <Section>
+      <Navbar />
       {/* <Canvas>
             <AestheticSquare />
 
@@ -152,44 +133,39 @@ const Home: React.FC<HomeProps> = () => {
         <Left>
           <Title>Ingrid Ruiz</Title>
           <WhatWeDo>
-            <Line src="./wallpaper.jpg" />
+            {/* <Line src="./wallpaper.jpg" /> */}
             <Subtitle>Desarrolladora Web</Subtitle>
           </WhatWeDo>
           <Desc>
-            We enjoy creating delightful, human-centered digital experiences.
+            Apasionada por el desarrollo de experiencias digitales cautivadoras.
           </Desc>
-          <Button>Lern More</Button>
+          <Button>Leer más</Button>
         </Left>
-        <Right>
-          {/* <BlurredBackground> */}
-            {/* <AnimationB> */}
-              <CircularCanvasWrapper>
-                <CircularCanvas
-                  camera={{
-                    position: [0, 5, 100],
-                    fov: 55,
-                    near: 1,
-                    far: 20000,
-                  }}
-                >
-                  <pointLight position={[100, 100, 100]} />
-                  <pointLight position={[-100, -100, -100]} />
-                  <Suspense fallback={null}>
-                    <WaterWaves />
-                    <Sunset />
-                  </Suspense>
-                  <Sky
-                    scale={1000}
-                    sunPosition={[500, 150, -1000]}
-                    turbidity={0.1}
-                  />
-                  <OrbitControls />
-                </CircularCanvas>
-              </CircularCanvasWrapper>
-            {/* </AnimationB> */}
-          {/* </BlurredBackground> */}
+        <Right className="flex items-center justify- justify-center">
+          <CircularCanvasWrapper className="w-64 h-64">
+            <CircularCanvas
+              camera={{
+                position: [0, 5, 100],
+                fov: 55,
+                near: 1,
+                far: 20000,
+              }}
+            >
+              <pointLight position={[100, 100, 100]} />
+              <pointLight position={[-100, -100, -100]} />
+              <Suspense fallback={null}>
+                <WaterWaves />
+                <Sunset />
+              </Suspense>
+              <Sky
+                scale={1000}
+                sunPosition={[500, 150, -1000]}
+                turbidity={0.1}
+              />
+              <OrbitControls />
+            </CircularCanvas>
+          </CircularCanvasWrapper>
 
-          {/* <Img src="./giphy-unscreen.gif" /> */}
         </Right>
       </Container>
     </Section>
