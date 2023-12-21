@@ -1,55 +1,65 @@
 import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
+import { useGLTF, PositionalAudio } from '@react-three/drei';
 
-const Scene = ({ vertex, fragment }) => {
-  const meshRef = useRef();
-
-  // Load the noise texture and update the shader uniform
-  const noiseTexture = useTexture("noise2.png");
-  useFrame((state) => {
-    let time = state.clock.getElapsedTime();
-    meshRef.current.material.uniforms.iTime.value = time + 20; // start from 20 to skip first 20 seconds (optional)
-  });
-
-  // Define the shader uniforms with memoization to optimize performance
-  const uniforms = useMemo(
-    () => ({
-      iTime: { type: "f", value: 1.0 },
-      iResolution: { type: "v2", value: new THREE.Vector2(4, 3) },
-      iChannel0: { type: "t", value: noiseTexture },
-    }),
-    [noiseTexture]
-  );
-
-  // Create the sun geometry and shader material
-  const sunGeom = new THREE.SphereGeometry(30, 64, 64);
-  const sunMat = new THREE.ShaderMaterial({
-    uniforms: uniforms,
-    vertexShader: vertex,
-    fragmentShader: fragment,
-    transparent: true,
-  });
+const Scene = ({ ready }) => {
+  // const meshRef = useRef();
+  const group = useRef();
+  const { nodes, materials } = useGLTF("/models/vaporwave_sunset.glb");
+  useFrame(() => (group.current.rotation.x += 0.006));
 
   return (
-    <>
-      <mesh ref={meshRef}>
-        <planeGeometry args={[4, 3]} />
-        <shaderMaterial
-          uniforms={uniforms}
-          vertexShader={vertex}
-          fragmentShader={fragment}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
+    <group ref={group} >
+      <group >
+        <group scale={100} dispose={null}>
+        <mesh material={materials.Material_5} geometry={nodes.Object_4.geometry} />
+        </group>
+        <group scale={1.991} dispose={null} position={[0, 0, -20]}>
+          <mesh material={materials.Black} geometry={nodes.Object_6.geometry} />
+          <mesh
+            material={materials.Material_2}
+            geometry={nodes.Object_7.geometry}
+          />
+          <mesh
+            material={materials.Material_2}
+            geometry={nodes.Object_8.geometry}
+          />
+        </group>
+        <group scale={1.991} dispose={null} position={[0, 0, -20]}>
+          <mesh
+            material={materials.Black}
+            geometry={nodes.Object_10.geometry}
+          />
+          <mesh
+            material={materials.Material_3}
+            geometry={nodes.Object_11.geometry}
+          />
+        </group>
+        <group scale={1.991} dispose={null} position={[0, 0, -20]}>
+          <mesh
+            material={materials.Black}
+            geometry={nodes.Object_13.geometry}
+          />
+          <mesh
+            material={materials.Material_4}
+            geometry={nodes.Object_14.geometry}
+          />
+        </group>
+        <group scale={1} position={[0, 0, 0]}>
+        {ready && <PositionalAudio autoplay loop url="/abstract-world.mp3" distance={3} />}
+        </group>
+        <group scale={24} dispose={null} position={[0, 80, 0]}>
+          
+        <mesh
+            material={materials.Sun_001}
+            geometry={nodes.Object_16.geometry}
+          />
+        </group>
 
-      {/* Agregar el sol */}
-      <mesh>
-        <sphereGeometry args={[30, 64, 64]} />
-        <primitive object={sunMat} position={[sunPos.x, sunPos.y, sunPos.z]} />
-      </mesh>
-    </>
+
+      </group>
+    </group>
   );
 };
 

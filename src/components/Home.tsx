@@ -5,6 +5,7 @@ import { OrbitControls, Sky } from "@react-three/drei";
 import Sunset from "./Sunset";
 import WaterWaves from "./WaterWaves";
 import Navbar from "./Navbar";
+import Scene from "./Scene";
 
 type HomeProps = {};
 
@@ -110,7 +111,7 @@ const CircularCanvasWrapper = styled.div`
 @apply flex items-center justify-center; 
 clip-path: polygon(50% 100%, 0 0, 100% 0);
     width: 80%;
-    height: 60%;
+    height: 70%;
     display: flex;
     border: 156px red;
     overflow: hidden;
@@ -120,7 +121,7 @@ const CircularCanvas = styled(Canvas)`
   width: 100%;
   height: 100%;
 `;
-const Home: React.FC<HomeProps> = () => {
+const Home: React.FC<HomeProps> = ({ ready }) => {
   return (
 
     <Section>
@@ -147,21 +148,17 @@ const Home: React.FC<HomeProps> = () => {
               camera={{
                 position: [0, 5, 100],
                 fov: 55,
-                near: 1,
-                far: 20000,
+                near: 40,
+                far: 1000,
               }}
             >
               <pointLight position={[100, 100, 100]} />
               <pointLight position={[-100, -100, -100]} />
               <Suspense fallback={null}>
-                <WaterWaves />
-                <Sunset />
+              <Scene ready={ready} />
+              
               </Suspense>
-              <Sky
-                scale={1000}
-                sunPosition={[500, 150, -1000]}
-                turbidity={0.1}
-              />
+
               <OrbitControls />
             </CircularCanvas>
           </CircularCanvasWrapper>
